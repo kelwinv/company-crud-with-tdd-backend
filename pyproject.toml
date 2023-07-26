@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "company-server"
+version = "0.1.0"
+description = ""
+authors = ["kelwinv"]
+readme = "README.md"
+packages = [
+  {include = "company_server"},
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.test.dependencies]
+mypy = "^1.4.1"
+pytest-testmon = "^2.0.12"
+pytest-watch = "^4.2.0"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
