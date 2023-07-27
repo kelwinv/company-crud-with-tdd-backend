@@ -7,13 +7,13 @@ from company_server.domain.entities.UUIDGenerator import UUIDGenerate
 
 def test_create_company():
     """Test creating a company with a valid CNPJ"""
-    id = UUIDGenerate.generate()
+    _id = UUIDGenerate.generate()
     cnpj_str = "49430512000187"
     company_name = "Company Name"
     trading_name = "Trading Name"
     cnae = "123456"
 
-    company = Company(id, cnpj_str, company_name, trading_name, cnae)
+    company = Company(_id, cnpj_str, company_name, trading_name, cnae)
 
     assert isinstance(company.id, str)
     assert isinstance(company.cnpj, CNPJ)
@@ -46,16 +46,16 @@ def test_create_company_invalid_cnpj():
     cnae = "123456"
 
     with pytest.raises(ValueError):
-        company = Company.create(cnpj, company_name, trading_name, cnae)
+        Company.create(cnpj, company_name, trading_name, cnae)
 
 
 def test_create_company_missing_fields():
     """Test creating a company with missing required fields"""
-    id = UUIDGenerate.generate()
+    _id = UUIDGenerate.generate()
     cnpj = "12345678000199"
     company_name = "Company Name"
     trading_name = ""
     cnae = ""
 
     with pytest.raises(ValueError):
-        company = Company(id, cnpj, company_name, trading_name, cnae)
+        Company(_id, cnpj, company_name, trading_name, cnae)
