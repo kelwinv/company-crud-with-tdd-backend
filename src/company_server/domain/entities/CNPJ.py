@@ -2,6 +2,8 @@
 
 
 class CNPJ:
+    """CNPJ entity"""
+
     def __init__(self, cnpj: str):
         self.cnpj = self._format_cnpj(cnpj)
         self._validate()
@@ -44,8 +46,3 @@ class CNPJ:
 
     def __repr__(self) -> str:
         return f"CNPJ('{self.cnpj}')"
-
-
-if __name__ == "__main__":
-    cnpj_str = "49.430.512/0001-87"
-    CNPJ(cnpj_str)

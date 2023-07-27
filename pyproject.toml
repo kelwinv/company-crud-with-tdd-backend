@@ -16,6 +16,7 @@ mypy = "^1.4.1"
 pytest-testmon = "^2.0.12"
 pytest-watch = "^4.2.0"
 pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
