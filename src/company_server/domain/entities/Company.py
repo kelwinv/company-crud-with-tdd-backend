@@ -1,5 +1,3 @@
-import uuid
-
 from company_server.domain.entities.CNPJ import CNPJ
 from company_server.domain.entities.UUIDGenerator import UUIDGenerate
 
