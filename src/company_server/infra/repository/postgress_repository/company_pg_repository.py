@@ -57,25 +57,28 @@ class CompanyPGRepository(ICompanyRepository):
     ) -> Tuple[List[Company], int]:
         """paginate and filter companies"""
         query_filter = None
+
         for attribute, value in page_query.items():
             if query_filter is None:
                 query_filter = getattr(CompanyModel, attribute) == value
             else:
                 query_filter &= getattr(CompanyModel, attribute) == value
 
-        company_models = CompanyModel.select().where(query_filter)
+        company_query = CompanyModel.select().where(query_filter)
 
         if page_sort:
             if page_dir.lower() == "desc":
                 sort_column = getattr(CompanyModel, page_sort).desc()
             else:
                 sort_column = getattr(CompanyModel, page_sort).asc()
-            company_models = company_models.order_by(sort_column)
+            company_query = company_query.order_by(sort_column)
 
-        total_count = company_models.count()
+        total_count = company_query.count()
+
         start_index = start * page_limit
-        company_models = company_models.offset(start_index).limit(page_limit)
+        company_models = company_query.offset(start_index).limit(page_limit)
 
+        self._model_to_entity(company_models[0])
         return [
             self._model_to_entity(company) for company in company_models
         ], total_count
@@ -101,14 +104,3 @@ class CompanyPGRepository(ICompanyRepository):
             trading_name=company_model.trading_name,
             cnae=company_model.cnae,
         )
-
-
-if __name__ == "__main__":
-    limit = 2
-    query = {"company_name": "dsada"}
-    sort = "trading_name"
-    direction = "asc"
-
-    repo = CompanyPGRepository()
-    companies = repo.paginate(0, limit, sort, direction, query)
-    print(companies)

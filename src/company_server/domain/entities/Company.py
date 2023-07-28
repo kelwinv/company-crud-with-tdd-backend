@@ -7,6 +7,7 @@ class Company:
 
     def __init__(self, id, cnpj, company_name, trading_name, cnae):
         self.id = id
+
         self.cnpj = CNPJ(cnpj)
         self.company_name = company_name
         self.trading_name = trading_name
@@ -28,3 +29,12 @@ class Company:
         for field in required_fields:
             if not getattr(self, field):
                 raise ValueError(f"Field '{field}' is required.")
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "cnpj": str(self.cnpj),
+            "company_name": self.company_name,
+            "trading_name": self.trading_name,
+            "cnae": self.cnae,
+        }

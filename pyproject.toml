@@ -8,11 +8,16 @@ packages = [
   {include = "company_server", from = "src"}
 ]
 
+[tool.poetry.scripts]
+start = "src.company_server.infra.server:app.run"
+start_dev = "src.company_server.infra.server:app.run(debug=True)"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 python-dotenv = "^1.0.0"
 peewee = "^3.16.2"
 psycopg2 = "^2.9.6"
+flask = "^2.3.2"
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.4.1"

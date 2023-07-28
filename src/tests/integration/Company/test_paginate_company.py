@@ -1,3 +1,4 @@
+"""Paginate test"""
 from psycopg2 import OperationalError
 import pytest
 from company_server.application.exceptions.paginate_company_errors import (
@@ -7,6 +8,7 @@ from company_server.application.exceptions.paginate_company_errors import (
 from company_server.application.use_case.paginate_company import PaginateCompany
 
 from company_server.domain.Repository.i_company_repository import ICompanyRepository
+from company_server.domain.entities.CNPJ import CNPJ
 from company_server.domain.entities.Company import Company
 from company_server.domain.entities.UUIDGenerator import UUIDGenerate
 
@@ -152,6 +154,7 @@ def test_paginate_company_with_query(setup):
     assert total_page == 1
 
     assert result[0].cnae == "654321"
+    assert isinstance(result[0].cnpj, CNPJ)
 
 
 def test_paginate_company_with_invalid_query(setup):

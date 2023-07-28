@@ -33,7 +33,6 @@ class PaginateCompany:
                 raise InvalidQueryAttributeError(
                     f"Invalid query attribute: {attribute}"
                 )
-
         if not direction:
             direction = "desc"
         elif direction not in ["asc", "desc"]:
