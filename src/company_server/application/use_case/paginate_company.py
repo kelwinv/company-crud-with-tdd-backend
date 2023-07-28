@@ -1,6 +1,7 @@
 """use case for creating a company"""
 
-from typing import List
+from math import ceil
+from typing import List, Tuple
 from company_server.application.exceptions.paginate_company_errors import (
     InvalidQueryAttributeError,
     InvalidSortAttributeError,
@@ -19,7 +20,7 @@ class PaginateCompany:
 
     def execute(
         self, start: int, limit: int, sort: str, direction: str, query: dict
-    ) -> List[Company]:
+    ) -> Tuple[List[Company], int, int]:
         """method to execute"""
         valid_attributes = ["company_name", "trading_name", "cnpj", "cnae"]
 
@@ -38,4 +39,9 @@ class PaginateCompany:
         elif direction not in ["asc", "desc"]:
             raise ValueError("Invalid direction. It must be 'asc' or 'desc'.")
 
-        return self.repository.paginate(start, limit, sort, direction, query)
+        companies, total_items = self.repository.paginate(
+            start, limit, sort, direction, query
+        )
+        total_pages = ceil(total_items / limit)
+
+        return companies, total_items, total_pages
