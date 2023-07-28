@@ -22,5 +22,11 @@ class ICompanyRepository(ABC):
         """get all company"""
 
     @abstractmethod
+    def paginate(
+        self, start: int, limit: int, sort: str, direction: str, query: dict
+    ) -> List[Company]:
+        """remove a company"""
+
+    @abstractmethod
     def remove_company(self, company_id: str) -> None:
         """remove a company"""
