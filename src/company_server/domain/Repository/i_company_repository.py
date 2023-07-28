@@ -1,7 +1,7 @@
 """inteface from company_repository """
 
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from company_server.domain.entities.Company import Company
 
@@ -23,8 +23,13 @@ class ICompanyRepository(ABC):
 
     @abstractmethod
     def paginate(
-        self, start: int, limit: int, sort: str, direction: str, query: dict
-    ) -> List[Company]:
+        self,
+        start: int,
+        page_limit: int,
+        page_sort: str,
+        page_dir: str,
+        page_query: dict,
+    ) -> Tuple[List[Company], int]:
         """remove a company"""
 
     @abstractmethod

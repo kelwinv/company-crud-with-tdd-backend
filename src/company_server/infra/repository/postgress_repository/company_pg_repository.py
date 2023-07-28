@@ -1,6 +1,6 @@
 """company repository"""
 
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from peewee import DoesNotExist
 from company_server.application.exceptions.create_company_error import (
     DuplicateCnpjError,
@@ -47,6 +47,39 @@ class CompanyPGRepository(ICompanyRepository):
             self._model_to_entity(company_model) for company_model in company_models
         ]
 
+    def paginate(
+        self,
+        start: int,
+        page_limit: int,
+        page_sort: str,
+        page_dir: str,
+        page_query: dict,
+    ) -> Tuple[List[Company], int]:
+        """paginate and filter companies"""
+        query_filter = None
+        for attribute, value in page_query.items():
+            if query_filter is None:
+                query_filter = getattr(CompanyModel, attribute) == value
+            else:
+                query_filter &= getattr(CompanyModel, attribute) == value
+
+        company_models = CompanyModel.select().where(query_filter)
+
+        if page_sort:
+            if page_dir.lower() == "desc":
+                sort_column = getattr(CompanyModel, page_sort).desc()
+            else:
+                sort_column = getattr(CompanyModel, page_sort).asc()
+            company_models = company_models.order_by(sort_column)
+
+        total_count = company_models.count()
+        start_index = start * page_limit
+        company_models = company_models.offset(start_index).limit(page_limit)
+
+        return [
+            self._model_to_entity(company) for company in company_models
+        ], total_count
+
     def remove_company(self, company_id) -> None:
         """remove company by id"""
         CompanyModel.delete_by_id(company_id)
@@ -68,3 +101,14 @@ class CompanyPGRepository(ICompanyRepository):
             trading_name=company_model.trading_name,
             cnae=company_model.cnae,
         )
+
+
+if __name__ == "__main__":
+    limit = 2
+    query = {"company_name": "dsada"}
+    sort = "trading_name"
+    direction = "asc"
+
+    repo = CompanyPGRepository()
+    companies = repo.paginate(0, limit, sort, direction, query)
+    print(companies)

@@ -1,6 +1,6 @@
 """company repository"""
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 from company_server.domain.Repository.i_company_repository import ICompanyRepository
 from company_server.domain.entities.Company import Company
 
@@ -26,16 +26,21 @@ class CompanyInMemoryRepository(ICompanyRepository):
         return list(self.companies.values())
 
     def paginate(
-        self, start: int, limit: int, sort: str, direction: str, query: dict
-    ) -> List[Company]:
+        self,
+        start: int,
+        page_limit: int,
+        page_sort: str,
+        page_dir: str,
+        page_query: dict,
+    ) -> Tuple[List[Company], int]:
         """get paginated and sorted list of companies"""
         company_paginated = list(self.companies.values())
-        self.sort_companies(sort, company_paginated, direction)
-        self.query_companies(query, company_paginated)
+        self.sort_companies(page_sort, company_paginated, page_dir)
+        self.query_companies(page_query, company_paginated)
 
-        start_index = start * limit
-        end_index = start_index + limit
-        return company_paginated[start_index:end_index]
+        start_index = start * page_limit
+        end_index = start_index + page_limit
+        return company_paginated[start_index:end_index], len(company_paginated)
 
     def sort_companies(
         self, sort: str, company_paginated: List[Company], direction: str
