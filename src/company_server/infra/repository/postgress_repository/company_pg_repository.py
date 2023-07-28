@@ -2,7 +2,9 @@
 
 from typing import List, Optional
 from peewee import DoesNotExist
-from company_server.application.exceptions.DuplicateCnpjError import DuplicateCnpjError
+from company_server.application.exceptions.create_company_error import (
+    DuplicateCnpjError,
+)
 
 from company_server.domain.Repository.i_company_repository import ICompanyRepository
 from company_server.domain.entities.Company import Company

@@ -43,13 +43,11 @@ def test_create_company(setup):
 
     company_id = create_company.execute(cnpj, company_name, trading_name, cnae)
     _test_company_ids.append(company_id)
-    print(company_id)
 
     assert isinstance(company_id, str)
 
     saved_company = company_repo.get_by_cnpj(cnpj)
     assert saved_company is not None
-    print(saved_company.id)
 
     assert str(saved_company.id) == company_id
 
