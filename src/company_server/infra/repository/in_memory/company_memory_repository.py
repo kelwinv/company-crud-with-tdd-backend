@@ -13,11 +13,21 @@ class CompanyInMemoryRepository(ICompanyRepository):
     def __init__(self):
         self.companies = {}
 
-    def save(self, companyData: Company):
-        self.companies[companyData.cnpj.cnpj] = companyData
+    def save(self, company_data: Company):
+        """save company data"""
+        self.companies[company_data.cnpj.cnpj] = company_data
 
     def get_by_cnpj(self, cnpj: str) -> Optional[Company]:
+        """get company by cnpj"""
         return self.companies.get(cnpj, None)
 
     def get_all(self) -> List[Company]:
+        """get all company"""
         return list(self.companies.values())
+
+    def remove_company(self, company_id: str) -> None:
+        """remove company by id"""
+        for cnpj, company in self.companies.items():
+            if company.id == company_id:
+                del self.companies[cnpj]
+                break

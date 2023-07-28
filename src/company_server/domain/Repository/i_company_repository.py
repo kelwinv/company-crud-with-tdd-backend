@@ -10,7 +10,7 @@ class ICompanyRepository(ABC):
     """internal class"""
 
     @abstractmethod
-    def save(self, companyData: Company):
+    def save(self, company_data: Company) -> str:
         """save a company"""
 
     @abstractmethod
@@ -20,3 +20,7 @@ class ICompanyRepository(ABC):
     @abstractmethod
     def get_all(self) -> List[Company]:
         """get all company"""
+
+    @abstractmethod
+    def remove_company(self, company_id: str) -> None:
+        """remove a company"""
