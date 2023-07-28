@@ -1,6 +1,6 @@
 """test create company"""
-from sqlite3 import OperationalError
 from typing import List
+from psycopg2 import OperationalError
 import pytest
 
 from company_server.application.use_case.create_company import CreateCompany

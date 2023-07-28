@@ -2,9 +2,9 @@
 
 from typing import List, Optional
 from peewee import DoesNotExist
+from company_server.application.exceptions.DuplicateCnpjError import DuplicateCnpjError
 
 from company_server.domain.Repository.i_company_repository import ICompanyRepository
-from company_server.domain.entities.CNPJ import CNPJ
 from company_server.domain.entities.Company import Company
 from company_server.infra.repository.postgress_repository.model.company_model import (
     CompanyModel,
@@ -16,16 +16,19 @@ class CompanyPGRepository(ICompanyRepository):
 
     def save(self, company_data: Company) -> str:
         """save company"""
-        company_model = self._entity_to_model(company_data)
-        _id = CompanyModel.create(
-            id=company_model.id,
-            cnpj=company_model.cnpj,
-            company_name=company_model.company_name,
-            trading_name=company_model.trading_name,
-            cnae=company_model.cnae,
-        )
+        try:
+            company_model = self._entity_to_model(company_data)
+            _id = CompanyModel.create(
+                id=company_model.id,
+                cnpj=company_model.cnpj,
+                company_name=company_model.company_name,
+                trading_name=company_model.trading_name,
+                cnae=company_model.cnae,
+            )
 
-        return _id
+            return _id
+        except Exception as error:
+            raise DuplicateCnpjError(error) from error
 
     def get_by_cnpj(self, cnpj: str) -> Optional[Company]:
         try:
