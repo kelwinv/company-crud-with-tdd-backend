@@ -23,7 +23,4 @@ DATABASE_CONFIG = {
     "schema": DATABASE_SCHEMA,
 }
 
-SERVER_CONFIG = {
-    'port': PORT,
-    'host': HOST
-}
+SERVER_CONFIG = {"port": PORT, "host": HOST}

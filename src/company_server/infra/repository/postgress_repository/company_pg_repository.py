@@ -78,7 +78,6 @@ class CompanyPGRepository(ICompanyRepository):
         start_index = start * page_limit
         company_models = company_query.offset(start_index).limit(page_limit)
 
-        self._model_to_entity(company_models[0])
         return [
             self._model_to_entity(company) for company in company_models
         ], total_count

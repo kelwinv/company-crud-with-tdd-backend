@@ -65,9 +65,7 @@ def get_all_companies():
         companies, total_items, total_pages = paginate_company.execute(
             start, limit, sort, direction, query
         )
-        print(companies[0].__dict__)
 
-        # Formato de retorno da resposta
         response = {
             "companies": [company.to_json() for company in companies],
             "total_items": total_items,

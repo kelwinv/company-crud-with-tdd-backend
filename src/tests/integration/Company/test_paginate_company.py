@@ -1,4 +1,5 @@
 """Paginate test"""
+from typing import List
 from psycopg2 import OperationalError
 import pytest
 from company_server.application.exceptions.paginate_company_errors import (
@@ -193,3 +194,16 @@ def test_paginate_company_without_parameters(setup):
 
     result, _, _ = paginate_company.execute(0, 1, sort, "asc", query)
     assert len(result) > 0
+
+
+def test_paginate_without_company(setup):
+    """Test paginate without company"""
+    company_repo = setup
+    paginate_company = PaginateCompany(company_repo)
+
+    query = {"company_name": "unknown name"}
+    sort = ""
+
+    result, _, _ = paginate_company.execute(0, 1, sort, "asc", query)
+    assert len(result) == 0
+    assert isinstance(result, List)
