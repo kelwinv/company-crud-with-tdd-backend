@@ -8,7 +8,7 @@ from company_server.application.exceptions.create_company_error import (
 
 from company_server.domain.Repository.i_company_repository import ICompanyRepository
 from company_server.domain.entities.Company import Company
-from company_server.infra.repository.postgress_repository.model.company_model import (
+from company_server.infra.db.model.company_model import (
     CompanyModel,
 )
 

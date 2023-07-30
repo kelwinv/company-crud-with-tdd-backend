@@ -2,7 +2,7 @@
 
 from peewee import CharField, UUIDField
 
-from company_server.infra.repository.postgress_repository.base_pg_repository import (
+from company_server.infra.db.base_pg import (
     BasePGModel,
 )
 
