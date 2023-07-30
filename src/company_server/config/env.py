@@ -11,6 +11,9 @@ DATABASE_HOST = os.getenv("DATABASE_HOST", "your_host")
 DATABASE_PORT = os.getenv("DATABASE_PORT", "5432")
 DATABASE_SCHEMA = os.getenv("DATABASE_SCHEMA", "public")
 
+PORT = os.getenv("PORT", "3333")
+HOST = os.getenv("HOST", "0.0.0.0")
+
 DATABASE_CONFIG = {
     "database": DATABASE_NAME,
     "user": DATABASE_USER,
@@ -18,4 +21,9 @@ DATABASE_CONFIG = {
     "host": DATABASE_HOST,
     "port": DATABASE_PORT,
     "schema": DATABASE_SCHEMA,
+}
+
+SERVER_CONFIG = {
+    'port': PORT,
+    'host': HOST
 }

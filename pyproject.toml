@@ -9,8 +9,8 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-start = "src.company_server.infra.server:app.run"
-start_dev = "src.company_server.infra.server:app.run(debug=True)"
+start = "src.company_server.main:start"
+start_dev = "src.company_server.main:start_dev"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -18,6 +18,9 @@ python-dotenv = "^1.0.0"
 peewee = "^3.16.2"
 psycopg2 = "^2.9.6"
 flask = "^2.3.2"
+flask-cors = "^4.0.0"
+waitress = "^2.1.2"
+types-waitress = "^2.1.4.9"
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.4.1"

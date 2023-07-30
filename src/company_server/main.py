@@ -1,13 +1,21 @@
-from company_server.domain.entities.Company import Company
+"""Main function"""
+from company_server.config.env import SERVER_CONFIG
+from flask_cors import CORS
+from waitress import serve
+from company_server.infra.server import app
+
+
+CORS(app)
 
 
 def start():
-    cnpj = "12345678000199"
-    company_name = "Company Name"
-    trading_name = "Trading Name"
-    cnae = "123456"
+    """Start the application"""
+    serve(app, host=SERVER_CONFIG['host'], port=SERVER_CONFIG['port'])
 
-    company = Company(cnpj, company_name, trading_name, cnae)
+
+def start_dev():
+    """Start the application with debug"""
+    app.run(debug=True, port=SERVER_CONFIG['port'])
 
 
 if __name__ == "__main__":
