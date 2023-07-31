@@ -2,6 +2,7 @@
 import random
 import uuid
 
+import argparse
 from faker import Faker
 from company_server.domain.entities.CNPJ import CNPJ
 
@@ -36,6 +37,7 @@ def generate_valid_cnpj():
 # Função para criar registros de exemplo na tabela CompanyModel
 def seed_companies(number_of_companies):
     """Generate a seed from company"""
+    ids_created = []
     for _ in range(number_of_companies):
         cnpj = generate_valid_cnpj()
         company_name = fake.company()
@@ -43,18 +45,31 @@ def seed_companies(number_of_companies):
         cnae = random.choice(cnae_list)
         CNPJ(cnpj)
 
-        CompanyModel.create(
+        _id = CompanyModel.create(
             id=uuid.uuid4(),
             cnpj=cnpj,
             company_name=company_name,
             trading_name=trading_name,
             cnae=cnae,
         )
+        ids_created.append(str(_id))
+
+    print(f"Seed concluído com sucesso!, {number_of_companies} foram criadas.")
+    print(f"ids gerados: {ids_created}.")
+
+
+def start():
+    """Start the interpreter with some arguments"""
+    parser = argparse.ArgumentParser(description="Preenche dados no banco")
+    parser.add_argument(
+        "quantity",
+        type=int,
+        help="Especifique a quantidade de empresas que deseja adicionar",
+    )
+
+    args = parser.parse_args()
+    seed_companies(args.quantity)
 
 
 if __name__ == "__main__":
-    CompanyModel.create_table()
-
     seed_companies(25)
-
-    print("Seed concluído com sucesso!")

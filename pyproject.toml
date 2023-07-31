@@ -9,8 +9,9 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-start = "src.company_server.main:start"
-start_dev = "src.company_server.main:start_dev"
+start = "company_server.main:start"
+start_dev = "company_server.main:start_dev"
+seed_company = "company_server.infra.db.company_seed_pg:start"
 
 [tool.poetry.dependencies]
 python = "^3.10"
