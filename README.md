@@ -22,9 +22,14 @@ git clone https://github.com/kelwinv/company-crud-with-tdd-backend.git
 
 ```bash
 cd company-crud-with-tdd-backend
-poetry install
 poetry shell
+poetry install
 ```
+> Caso queira automatizar a configuração do banco, dentro da pasta config_project existe um arquivo que cria um docker de postgres configura o env para executar basta na pasta raiz executar: 
+```bash 
+  python config_project/config_project.py 
+  seed_company 25 # comando que popula o banco com 25 empresas
+``` 
 
 3. Configure o arquivo `.env` na raiz do projeto com as informações de conexão do banco de dados e a porta do servidor. Por exemplo:
 

@@ -1,0 +1,12 @@
+version: '3'
+
+services: 
+  pgdocker: 
+    image: postgres
+    container_name: companydb
+    environment:
+      POSTGRES_DB: company
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+    ports:
+      - 5433:5432
